@@ -291,7 +291,7 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 											</div><!--/.col-->
 											<div class="col-sm-6 col-xs-12">
 												<div class="form-group">
-													<input type="email" class="form-control" id="dienThoai" placeholder="Số điện thoại*" name="dienThoai">
+													<input type="text" class="form-control" id="dienThoai" placeholder="Số điện thoại*" name="dienThoai">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
@@ -412,7 +412,7 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 		$('#submit-form').on('click', function(e) {
   
 			var jqxhr0 = $.ajax({
-					url: url0,
+					url: url,
 					method: "GET",
 					dataType: "json",
 					data: $form.serializeObject(),
