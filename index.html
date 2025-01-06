@@ -282,37 +282,37 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 						<div class="col-md-offset-1 col-md-5 col-sm-6">
 							<div class="single-contact-box">
 								<div class="contact-form">
-									<form>
+									<form id="customer-form">
 										<div class="row">
 											<div class="col-sm-6 col-xs-12">
 												<div class="form-group">
-												  <input type="text" class="form-control" id="name" placeholder="Họ tên *" name="Họ tên">
+												  <input type="text" class="form-control" id="hoTen" placeholder="Họ tên *" name="hoTen">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 											<div class="col-sm-6 col-xs-12">
 												<div class="form-group">
-													<input type="email" class="form-control" id="email" placeholder="Số điện thoại*" name="Số điện thoại">
+													<input type="email" class="form-control" id="dienThoai" placeholder="Số điện thoại*" name="dienThoai">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<input type="text" class="form-control" id="subject" placeholder="Nhu cầu" name="Nhu cầu">
+													<input type="text" class="form-control" id="nhuCau" placeholder="Nhu cầu" name="nhuCau">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<textarea class="form-control" rows="4" id="comment" placeholder="Ghi chú" ></textarea>
+													<textarea class="form-control" rows="4" id="ghiChu" placeholder="Ghi chú" ></textarea>
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="single-contact-btn">
-													<a class="contact-btn" href="#" role="button">Gửi</a>
+													<button class="contact-btn" id="submit-form">Gửi</button>
 												</div><!--/.single-single-contact-btn-->
 											</div><!--/.col-->
 										</div><!--/.row-->
@@ -406,6 +406,20 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
         
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
+	<script>
+		var $form = $('form#customer-form');
+		var url = 'https://script.google.com/macros/s/AKfycbzfRpk99clGKNaMHgCs9ztkP_p0cKqSkk-YnS7CzBynhdBcCfOq2uxpDCHhi92uf3z3ZA/exec';
+		$('#submit-form').on('click', function(e) {
+  
+		var jqxhr0 = $.ajax({
+				url: url0,
+				method: "GET",
+				dataType: "json",
+				data: $form.serializeObject(),
+				success: function(){
+			}
+		});
+	</script>
         
     </body>	
 </html>
