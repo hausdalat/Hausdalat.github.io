@@ -407,19 +407,31 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
 	<script>
-		var $form = $('form#customer-form');
-		var url = 'https://script.google.com/macros/s/AKfycbzfRpk99clGKNaMHgCs9ztkP_p0cKqSkk-YnS7CzBynhdBcCfOq2uxpDCHhi92uf3z3ZA/exec';
-		$('#submit-form').on('click', function(e) {
-  
-			var jqxhr0 = $.ajax({
-					url: url,
-					method: "GET",
-					dataType: "json",
-					data: $form.serializeObject(),
-					success: function(){
-				}
-			});
-		});
+			
+			
+      var $form = $('#customer-form');
+      var url = 'https://script.google.com/macros/s/AKfycbzfRpk99clGKNaMHgCs9ztkP_p0cKqSkk-YnS7CzBynhdBcCfOq2uxpDCHhi92uf3z3ZA/exec';
+      
+      $('#submit-form').on('click', function(e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
+        
+        var formData = $form.serialize(); // Sử dụng serialize thay vì serializeObject
+        
+        $.ajax({
+          url: url,
+          method: "GET",
+          dataType: "json",
+          data: formData,
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(error) {
+            console.error(error);
+          }
+        });
+      });
+			
+			
 	</script>
         
     </body>	
