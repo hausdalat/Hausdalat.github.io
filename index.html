@@ -41,6 +41,9 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
+
+		 <!--modal.css-->
+		 <link rel="stylesheet" href="assets/css/modal.css">
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -286,36 +289,31 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 										<div class="row">
 											<div class="col-sm-6 col-xs-12">
 												<div class="form-group">
-												  <input type="text" class="form-control" id="hoTen" placeholder="Họ tên *" name="hoTen">
+												  <input required type="text" class="form-control form-field" id="hoTen" placeholder="Họ tên *" name="hoTen">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 											<div class="col-sm-6 col-xs-12">
 												<div class="form-group">
-													<input type="text" class="form-control" id="dienThoai" placeholder="Số điện thoại*" name="dienThoai">
+													<input required type="text" class="form-control form-field" id="dienThoai" placeholder="Số điện thoại *" name="dienThoai">
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group">
-													<input type="text" class="form-control" id="nhuCau" placeholder="Nhu cầu" name="nhuCau">
-												</div><!--/.form-group-->
-											</div><!--/.col-->
-										</div><!--/.row-->
-										<div class="row">
-											<div class="col-sm-12">
-												<div class="form-group">
-													<textarea class="form-control" rows="4" id="ghiChu" placeholder="Ghi chú" ></textarea>
+													<textarea class="form-control form-field" rows="4" id="ghiChu" placeholder="Lời nhắn cho chúng tôi" name="ghiChu"></textarea>
 												</div><!--/.form-group-->
 											</div><!--/.col-->
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="single-contact-btn">
-													<button class="contact-btn" id="submit-form">Gửi</button>
+													<button class="contact-btn" id="submit-form">Đăng ký tư vấn</button>
 												</div><!--/.single-single-contact-btn-->
 											</div><!--/.col-->
 										</div><!--/.row-->
+										<span id="loadingDots" style="display: none;">...</span>
+										<p id="successMessage" style="text-align: center; color: green; display: none;">Gửi thành công, chúng tôi sẽ liên hệ lại sớm!</p>
 									</form><!--/form-->
 								</div><!--/.contact-form-->
 							</div><!--/.single-contact-box-->
@@ -350,6 +348,25 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 
 		</section><!--/.contact-->
 		<!--contact end -->
+
+		<!-- Modal -->
+		<div id="myModalForm" class="modal">
+			<div class="modal-content">
+			  <span class="close">&times;</span>
+			  
+			  <h2 style="text-align: center; font-weight: bold;">ĐĂNG KÝ TƯ VẤN CHI TIẾT</h2>
+			  <form id="customer-form-modal">
+				<input class="form-field" type="text" id="hoTen" name="hoTen" placeholder="Nhập tên của bạn" required>
+				<input class="form-field" type="tel" id="dienThoai" name="dienThoai" placeholder="Nhập số điện thoại" required>
+				<textarea class="form-field" id="ghiChu" name="ghiChu" placeholder="Lời nhắn cho chúng tôi" rows="4"></textarea>
+		
+				<button id="submit-form" type="submit" class="btn-send">Đăng ký tư vấn <span class="loading">...</span></button>
+				<!-- <span id="loadingDots" style="display: none;">...</span> -->
+				<!-- Thông báo hiển thị sau khi gửi thành công -->
+				<p id="successMessage" style="text-align: center; color: green; display: none;">Gửi thành công, chúng tôi sẽ liên hệ lại sớm!</p>
+			  </form>
+			</div>
+		</div>
 
 		<!--footer-copyright start-->
 		<footer id="footer-copyright" class="footer-copyright">
@@ -409,27 +426,131 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 	<script>
 			
 			
-      var $form = $('#customer-form');
-      var url = 'https://script.google.com/macros/s/AKfycbzfRpk99clGKNaMHgCs9ztkP_p0cKqSkk-YnS7CzBynhdBcCfOq2uxpDCHhi92uf3z3ZA/exec';
       
-      $('#submit-form').on('click', function(e) {
+      var url = 'https://script.google.com/macros/s/AKfycbyBeCxX1K2trB4d2UtLJTKBRGQ1_50z6GB3KLF1QiIzhj8CtyUeVVHRJ7lYQ-kHZ7xl/exec';
+
+	  	const myModalForm = document.getElementById("myModalForm");
+		const closeModalBtn = document.querySelector(".close");
+
+		// Hiển thị modal sau 30 giây
+		setTimeout(() => {
+			myModalForm.style.display = "block";
+		}, 10000); // 10 giây
+
+		// Đóng modal khi nhấp vào nút "Close"
+		closeModalBtn.onclick = function () {
+			myModalForm.style.display = "none";
+		};
+
+		// Đóng modal khi nhấp vào bên ngoài modal
+		window.onclick = function (event) {
+		if (event.target === myModalForm) {
+			myModalForm.style.display = "none";
+		}
+		};
+		
+	  function showHieuUngSend(idParent) {
+		// Hiển thị hiệu ứng loading
+		const submitBtn = document.getElementById(idParent).querySelector("#submit-form");
+      	const loadingDots = document.getElementById(idParent).querySelector("#loadingDots");
+		// submitBtn.style.display = "none"; // Ẩn nút "Gửi"
+		// loadingDots.style.display = "inline"; // Hiển thị hiệu ứng loading
+		// Hiện hiệu ứng 3 chấm khi submit
+		$(idParent + ' .loading').show();
+	}
+
+	  function offHieuUngSend(idParent) {
+		$(idParent + ' .loading').hide();
+		// Hiển thị hiệu ứng loading
+		// const submitBtn = document.getElementById(idParent).querySelector("#submit-form");
+      	// const loadingDots = document.getElementById(idParent).querySelector("#loadingDots");
+		// loadingDots.style.display = "none"; // Ẩn hiệu ứng loading
+        // submitBtn.style.display = "block"; // Hiện lại nút "Gửi"
+	}
+
+
+
+	function validateForm(idForm) {
+		var isValid = true;
+		// Lấy tất cả các phần tử với lớp 'form-field'
+		var formFields = document.getElementsByClassName('form-field');
+		// Chạy vòng lặp qua từng phần tử
+		for (var i = 0; i < formFields.length; i++) {
+			formFields[i].style.borderColor = '#ccc';  // Đặt màu border cho từng phần tử
+		}
+
+		var form = document.getElementById(idForm);
+		var hoTen = form.hoTen.value;
+		var dienThoai = form.dienThoai.value;
+		if(hoTen == undefined || hoTen == null  || hoTen == '') {
+			document.getElementById(idForm).querySelector('#hoTen').style.borderColor = 'red';
+			isValid = false;
+		}
+		if(dienThoai == undefined || dienThoai == null  || dienThoai == '') {
+			document.getElementById(idForm).querySelector('#dienThoai').style.borderColor = 'red';
+			isValid = false;
+		}
+		return isValid;
+	}
+
+		$('#customer-form-modal #submit-form').on('click', function(e) {
+			e.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
+			
+			// var formData = $form.serialize(); // Sử dụng serialize thay vì serializeObject
+			var form = document.getElementById("customer-form-modal");
+			if(!validateForm('customer-form-modal')) {
+				return;
+			}
+			const formData = {
+				hoTen: form.hoTen.value,
+				dienThoai: form.dienThoai.value,
+				ghiChu: document.getElementById('customer-form-modal').querySelector('#ghiChu').value
+			};
+
+			sendData(formData, "customer-form-modal", form);
+      });
+
+	  $('#customer-form #submit-form').on('click', function(e) {
         e.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
         
-        var formData = $form.serialize(); // Sử dụng serialize thay vì serializeObject
-        
-        $.ajax({
+        // var formData = $form.serialize(); // Sử dụng serialize thay vì serializeObject
+		var form = document.getElementById("customer-form");
+		if(!validateForm('customer-form')) {
+				return;
+		}
+        const formData = {
+			hoTen: form.hoTen.value,
+			dienThoai: form.dienThoai.value,
+			ghiChu: document.getElementById('customer-form').querySelector('#ghiChu').value
+		};
+
+		sendData(formData, "customer-form", form);
+      });
+
+	  function sendData(formData, idParent, form) {
+		showHieuUngSend(idParent);
+		$.ajax({
           url: url,
-          method: "GET",
+          method: "POST",
           dataType: "json",
-          data: formData,
+          data: JSON.stringify(formData),
           success: function(response) {
             console.log(response);
+			// Hiển thị thông báo sau khi gửi thành công
+			document.getElementById(idParent).querySelector('#successMessage').style.display = "block";
+			// $('#customer-form #submit-form').style.display = "block";
+			// document.getElementById(idMessage + " successMessage").style.display = "block";
+			offHieuUngSend(idParent);
+			// Reset form
+			form.reset();
           },
           error: function(error) {
             console.error(error);
+			offHieuUngSend(idParent);
           }
+		  
         });
-      });
+	  }
 			
 			
 	</script>
