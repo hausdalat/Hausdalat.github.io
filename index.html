@@ -300,15 +300,13 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 										</div><!--/.row-->
 										<div class="row">
 											<div class="col-sm-12">
-												<div class="form-group">
-													<textarea class="form-control form-field" rows="4" id="ghiChu" placeholder="Lời nhắn cho chúng tôi" name="ghiChu"></textarea>
-												</div><!--/.form-group-->
-											</div><!--/.col-->
-										</div><!--/.row-->
-										<div class="row">
-											<div class="col-sm-12">
 												<div class="single-contact-btn">
-													<button class="contact-btn" id="submit-form">Đăng ký tư vấn</button>
+													<span id="loading" class="spinner" hidden></span>
+													<button class="contact-btn" id="submit-form">
+													
+														Đăng ký tư vấn
+													</button>
+													
 												</div><!--/.single-single-contact-btn-->
 											</div><!--/.col-->
 										</div><!--/.row-->
@@ -358,9 +356,13 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 			  <form id="customer-form-modal">
 				<input class="form-field" type="text" id="hoTen" name="hoTen" placeholder="Nhập tên của bạn" required>
 				<input class="form-field" type="tel" id="dienThoai" name="dienThoai" placeholder="Nhập số điện thoại" required>
-				<textarea class="form-field" id="ghiChu" name="ghiChu" placeholder="Lời nhắn cho chúng tôi" rows="4"></textarea>
 		
-				<button id="submit-form" type="submit" class="btn-send">Đăng ký tư vấn <span class="loading">...</span></button>
+				
+				<button id="submit-form" type="submit" class="btn-send">
+					<span id="loading" hidden><span class="spinner" hidden style="display: inline-block;"></span></span>
+					Đăng ký tư vấn
+
+				</button>
 				<!-- <span id="loadingDots" style="display: none;">...</span> -->
 				<!-- Thông báo hiển thị sau khi gửi thành công -->
 				<p id="successMessage" style="text-align: center; color: green; display: none;">Gửi thành công, chúng tôi sẽ liên hệ lại sớm!</p>
@@ -450,22 +452,20 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 		};
 		
 	  function showHieuUngSend(idParent) {
-		// Hiển thị hiệu ứng loading
-		const submitBtn = document.getElementById(idParent).querySelector("#submit-form");
-      	const loadingDots = document.getElementById(idParent).querySelector("#loadingDots");
-		// submitBtn.style.display = "none"; // Ẩn nút "Gửi"
-		// loadingDots.style.display = "inline"; // Hiển thị hiệu ứng loading
-		// Hiện hiệu ứng 3 chấm khi submit
-		$(idParent + ' .loading').show();
+		
+		const spinner = document.getElementById(idParent).querySelector('#loading');
+    
+		// Hiển thị biểu tượng xoay và vô hiệu hóa nút
+		spinner.hidden = false;
+		// button.disabled = true;
 	}
 
 	  function offHieuUngSend(idParent) {
-		$(idParent + ' .loading').hide();
-		// Hiển thị hiệu ứng loading
-		// const submitBtn = document.getElementById(idParent).querySelector("#submit-form");
-      	// const loadingDots = document.getElementById(idParent).querySelector("#loadingDots");
-		// loadingDots.style.display = "none"; // Ẩn hiệu ứng loading
-        // submitBtn.style.display = "block"; // Hiện lại nút "Gửi"
+		const spinner = document.getElementById(idParent).querySelector('#loading');
+
+		// Hiển thị biểu tượng xoay và vô hiệu hóa nút
+		spinner.hidden = true;
+		// button.disabled = true;
 	}
 
 
@@ -503,8 +503,7 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 			}
 			const formData = {
 				hoTen: form.hoTen.value,
-				dienThoai: form.dienThoai.value,
-				ghiChu: document.getElementById('customer-form-modal').querySelector('#ghiChu').value
+				dienThoai: form.dienThoai.value
 			};
 
 			sendData(formData, "customer-form-modal", form);
@@ -520,8 +519,7 @@ Từ Haus Da Lat có thể dễ dàng di chuyển tới sân golf Đồi Cù ( n
 		}
         const formData = {
 			hoTen: form.hoTen.value,
-			dienThoai: form.dienThoai.value,
-			ghiChu: document.getElementById('customer-form').querySelector('#ghiChu').value
+			dienThoai: form.dienThoai.value
 		};
 
 		sendData(formData, "customer-form", form);
